@@ -45,4 +45,5 @@ export class Calc implements OnInit {
         if (this.selectedTypeCalc.code==3) {this.govaHanacha = ["600000"]; this.hanachaBeshiur = 25;}
     }
 }
+//ng build --output-path docs --base-href /CalcTargetPriceApartment/
 
