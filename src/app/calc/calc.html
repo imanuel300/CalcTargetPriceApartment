@@ -16,7 +16,7 @@
                             לחישוב מחיר דירת <br>"מחיר מטרה"
                         </h1>
                         <h4 style="color: red;">הפרמטרים מפורסמים בחוברת המכרז ליזמים</h4>
-
+                        <p-button label="נקה נתונים שמורים" (click)="clearLoca()"></p-button>
                     </span>
                 </div>
 
@@ -42,7 +42,7 @@
                         </div>
                         <div class="col-12 card">
                             <h2> מחיר למטר כולל מע"מ<span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="mehirLemeter"
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="mehirLemeter"
                                 inputId="minmaxfraction" mode="decimal" [min]="3000" [max]="35000"
                                 [minFractionDigits]="2"> </p-inputNumber>
                             <small>ערכים מותרים בין 3,000 ל- 35,000 <br>
@@ -54,27 +54,35 @@
                         </div>
                         <div class="col-12 card">
                             <h2> האם בניין רב קומות<span style="color: red;">*</span></h2>
-                            <p-toggleButton (ngModelChange)="onChange($event)" [(ngModel)]="isRavKomot" onLabel="כן"
-                                offLabel="לא"></p-toggleButton>
+                            <p-toggleButton (ngModelChange)="onChange($event); RavKomot=9;" [(ngModel)]="isRavKomot"
+                                onLabel="כן" offLabel="לא"></p-toggleButton>
+                            <span *ngIf="RavKomot<9" style="color: red;">אינו רב קומות</span>
+                            <small> נחשב רב קומות מקומה 9 שהיא מעל 29 מטרים מהכניסה</small>
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot">
                             <h2>מספר קומות בבניין<span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="RavKomot"
-                                inputId="minmaxfraction" mode="decimal" [min]="8" [max]="50" [minFractionDigits]="0">
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="RavKomot" inputId="minmaxfraction"
+                                mode="decimal" [min]="9" [max]="50" [minFractionDigits]="0">
                             </p-inputNumber>
                             <small>ערכים מותרים מעל 8, מקסימום 50 , מספרים שלמים בלבד <br> </small>
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot">
                             <h2>מספר קומה של הדירה<span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="numberKoma"
-                                inputId="minmaxfraction" mode="decimal" [min]="0" [max]="50" [minFractionDigits]="0">
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberKoma" inputId="minmaxfraction"
+                                mode="decimal" [min]="0" [max]="50" [minFractionDigits]="0">
                             </p-inputNumber>
                             <small>ערכים מותרים בין 0 ל- 50 , מספרים שלמים בלבד </small>
                         </div>
+                        <div class="col-12 card" *ngIf="MekademKoma!=0">
+                            <h2>אחוז מקדמי קומה: {{MekademKoma}}</h2>
+                        </div>
+
+                        מחיר למטר כולל מע"מ - לאחר תוספת או הפחתה של מקדם הקומה
+                        שטח במטרים מעל גודל דירה מירבי
                         <div class="col-12 card" *ngIf="isRavKomot">
                             <h2>שטח דירה כולל מממ"ד במטרים - מוכפל ב- 100% מחיר למטר<span style="color: red;">*</span>
                             </h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="numberHadarim"
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberHadarim"
                                 inputId="minmaxfraction" mode="decimal" [min]="2.5" [max]="6" [minFractionDigits]="1">
                             </p-inputNumber>
                             <small>ערכים מותרים בין 2.5 ל- 6 </small>
@@ -86,8 +94,8 @@
                         </div>
                         <div class="col-12 card">
                             <h2>שטח דירה כולל מממ"ד במטרים <span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="shetachDira"
-                                inputId="minmaxfraction" mode="decimal" [min]="50" [max]="199" [minFractionDigits]="0">
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachDira" inputId="minmaxfraction"
+                                mode="decimal" [min]="50" [max]="199" [minFractionDigits]="0">
                             </p-inputNumber>
                             <small>מוכפל ב- 100% מחיר למטר<br>
                                 ערכים מותרים בין 50 ל- 199 , לאפשר חלק ממטר ???
@@ -95,7 +103,7 @@
                         </div>
                         <div class="col-12 card">
                             <h2>שטח מרפסת ו/או גינה במטרים <span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="shetachMirpesetOrGina"
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachMirpesetOrGina"
                                 inputId="minmaxfraction" mode="decimal" [min]="0"></p-inputNumber>
                             <small>מוכפל ב- 30%* ממחיר למטר<br>
                                 *כאשר שטח המרפסת ו/או הגינה גדולים מ- 30 מטר, החישוב בהתאם לסעיף 3.4.13.2 בחוברת במכרז
@@ -108,7 +116,7 @@
                         </div>
                         <div class="col-12 card">
                             <h2>שטח מחסן במטרים <span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="shetachMachsan"
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachMachsan"
                                 inputId="minmaxfraction" mode="decimal" [min]="2" [max]="14"></p-inputNumber>
                             <small>מוכפל ב- 40% ממחיר למטר<br><br>
                                 הנחת עבודה - בכול המכרזים של מחיר מטרה, עלות מטר מחסן 40% ממחיר למטר.<br>
@@ -117,102 +125,122 @@
                         </div>
                         <div class="col-12 card">
                             <h2>מספר חניות<span style="color: red;">*</span></h2>
-                            <p-inputNumber (ngModelChange)="onChange($event)" [(ngModel)]="shetachHanayot"
+                            <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachHanayot"
                                 inputId="minmaxfraction" mode="decimal" [min]="1" [max]="2"></p-inputNumber>
                             <small> מוכפל ב- 200% ממחיר למטר<br><br>
                                 הנחת עבודה - בכול המכרזים של מחיר מטרה, עלות מטר חניה 200% ממחיר למטר.<br>
                                 ערכים מותרים 1 או 2
                             </small>
                         </div>
-                        אחוז מקדמי קומה
-                        מחיר למטר כולל מע"מ - לאחר תוספת או הפחתה של מקדם הקומה
-                        שטח במטרים מעל גודל דירה מירבי
+
                         <div class="col-12 card" *ngIf="selectedTypeCalc.code==2">
                             <h2> מקדם הצמדה קבוע מהטבלה המפורטת בסעיף 1 במכרז<span style="color: red;">*</span></h2>
                             <div class="flex align-items-center">
-                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada" [value]="10.3"
-                                    (onClick)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
-                                <label [for]="mekademHatzmada" class="ml-2">10.3%</label>
+                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada103" [value]="10.3"
+                                    (ngModelChange)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
+                                <label [for]="mekademHatzmada103" class="ml-2">10.3%</label>
                             </div>
                             <div class="flex align-items-center">
-                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada" [value]="3.4"
-                                    (onClick)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
-                                <label [for]="mekademHatzmada" class="ml-2">3.4%</label>
+                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada34" [value]="3.4"
+                                    (ngModelChange)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
+                                <label [for]="mekademHatzmada34" class="ml-2">3.4%</label>
                             </div>
                         </div>
                         <div class="col-12 card">
                             <h2>גובה ההנחה לצורך בדיקת הגבלת מחיר יח"ד בהשוואה למחיר יח"ד מעודכן<span
                                     style="color: red;">*</span></h2>
                             <div class="flex align-items-center" *ngIf="selectedTypeCalc.code==1">
-                                <p-radioButton [inputId]="govaHanacha" name="govaHanacha" [value]="300000"
-                                    (onClick)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha" class="ml-2">300,000</label>
+                                <p-radioButton [inputId]="govaHanacha" name="govaHanacha300000" [value]="300000"
+                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
+                                <label [for]="govaHanacha300000" class="ml-2">300,000</label>
                             </div>
                             <!-- <div class="flex align-items-center">
                                 <p-radioButton [inputId]="govaHanacha" name="govaHanacha" [value]="310270"
                                     (onClick)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
                                 <label [for]="govaHanacha" class="ml-2">310,270</label>
                             </div> -->
-                            <div class="flex align-items-center" *ngIf="selectedTypeCalc.code==2">
-                                <p-radioButton [inputId]="govaHanacha" name="govaHanacha" [value]="500000"
-                                    (onClick)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha" class="ml-2">500,000</label>
+                            <div class="flex align-items-center" *ngIf="selectedTypeCalc.code>=2">
+                                <p-radioButton [inputId]="govaHanacha" name="govaHanacha500000" [value]="500000"
+                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
+                                <label [for]="govaHanacha500000" class="ml-2">500,000</label>
                             </div>
                             <div class="flex align-items-center" *ngIf="selectedTypeCalc.code>2">
-                                <p-radioButton [inputId]="govaHanacha" name="govaHanacha" [value]="600000"
-                                    (onClick)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha" class="ml-2">600,000</label>
+                                <p-radioButton [inputId]="govaHanacha600000" name="govaHanacha" [value]="600000"
+                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
+                                <label [for]="govaHanacha600000" class="ml-2">600,000</label>
                             </div>
-                            <small>  ערכים בהתאם לערך שהוזן בסוג החישוב </small>
+                            <small> ערכים בהתאם לערך שהוזן בסוג החישוב </small>
                         </div>
                     </div>
                 </div>
                 <div class='col-4' *ngIf="selectedTypeCalc.code>0">
-                    <div style="position: fixed; overflow-y:hidden; overflow-x:hidden;">
-                       
-                        <div class="col-12 card">
-                            <h5>סה"כ עלות המרכיבים של הדירה - <b>לפני הנחה</b></h5>
-                            <h4>{{sumAllMarkivim | number:'1.2-2'}} כולל מע"מ</h4>
+                    <div>
+
+
+                        <div class="col-12 card " style="background-color: aquamarine;">
+                            <h5>הנחה בשיעור <span>{{hanachaBeshiur}}%</span> של כלל מרכיבי הדירה: {{sumAllMarkivim *
+                                hanachaBeshiur/100 | number:'1.2-2'}}</h5>
+                            <h5>סה"כ עלות מרכיבי הדירה - <b> לאחר הנחה <span>{{hanachaBeshiur}}%</span></b>:
+                                {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h5>
                         </div>
-                        <div class="col-12 card ">
-                            <h5>הנחה בשיעור <span>{{hanachaBeshiur}}%</span> של כלל מרכיבי הדירה</h5>
-                            <h4>{{sumAllMarkivim * hanachaBeshiur/100 | number:'1.2-2'}}</h4>
+
+                        <div class="col-12 card " *ngIf="selectedTypeCalc.code==2"
+                            style="background-color: aquamarine;">
+                            <h5> מקדם הצמדה {{mekademHatzmada}}% מעלות מרכיבי הדירה: {{ sumAllMarkivim *
+                                (mekademHatzmada/100) | number:'1.2-2'}}</h5>
+                            <h5>סה"כ עלות מרכיבי הדירה - <b>כפול מקדם הצמדה {{mekademHatzmada}}%</b>: {{ sumAllMarkivim
+                                * (1+mekademHatzmada/100) | number:'1.2-2'}}</h5>
                         </div>
-                        <div class="col-12 card clacWin">
-                            <h5>סה"כ עלות המרכיבים של הדירה - <b> לאחר הנחה <span>{{hanachaBeshiur}}%</span></b></h5>
-                            <h4>{{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h4>
+                        <div class="col-12 card " *ngIf="selectedTypeCalc.code>=2" style="background-color:aquamarine;">
+                            <h5>גובה ההנחה לצורך בדיקת הגבלת מחיר {{+govaHanacha | number}}</h5>
+                            <h5>סה"כ עלות מרכיבי הדירה פחות סכום הגבלת גובה ההנחה: <span>{{ sumAllMarkivim - govaHanacha
+                                    | number:'1.2-2'}}</span></h5>
+                            <small>גובה הנחה מרבית מפורסמת בחוברת המכרז ובאתר ההרשמה להגרלות. הנחה מרבית נקבעת ע"י
+                                מועצת מקרקעי ישראל</small>
                         </div>
-                        <div class="col-12 card " *ngIf="selectedTypeCalc.code==2">
-                            <h5> מקדם הצמדה {{mekademHatzmada}}%</h5>
-                            <h4>{{ sumAllMarkivim * (mekademHatzmada/100) | number:'1.2-2'}}</h4>
-                        </div>
-                        <div class="col-12 card clacWin" *ngIf="selectedTypeCalc.code==2">
-                            <h5>סה"כ עלות המרכיבים של הדירה - <b>כפול מקדם הצמדה {{mekademHatzmada}}%</b></h5>
-                            <h4>{{ sumAllMarkivim * (1+mekademHatzmada/100) | number:'1.2-2'}}</h4>
+                        <div class="col-12 card clacSum" *ngIf="selectedTypeCalc.code==2"
+                            style="background-color:  aquamarine;">
+                            <h5>ההפרש בין מחיר דירה עם {{hanachaBeshiur}}% למחיר דירה עם מגבלה {{+govaHanacha |
+                                number}}: <b>{{ (sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) -
+                                    (sumAllMarkivim -
+                                    govaHanacha) | number:'1.2-2'}}</b></h5>
+                            <p-divider></p-divider>
+                            <h5>ההפרש בין מחיר דירה לאחר חישוב מקדם הצמדה {{mekademHatzmada}} למחיר דירה לאחר הנחה
+                                מרבית {{hanachaBeshiur}}%: <b>{{ (sumAllMarkivim *
+                                    (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim *
+                                    hanachaBeshiur/100)) | number:'1.2-2'}}</b></h5>
+                            <small>על מנת שההפרש יהיה גדול מ- 500,000 לדירה ממוצעת,<br>
+                                המחיר למטר כולל מע"מ צריך להיות גבוהה מ- 50,535₪</small>
+                            <small>ומחיר הדירה צריך להיות בגובה של 5,882,354 כולל מע"מ לפני הנחה או לפני הכפלה
+                                במקדם</small>
                         </div>
                     </div>
                 </div>
                 <div class='col-4'>
-                    <div style="position: fixed; overflow-y:hidden; overflow-x:hidden;">
+                    <div style="position: fixed; overflow-y:hidden; overflow-x:hidden; min-width: 583px;">
                         <div *ngIf="selectedTypeCalc.code>0">
-                            <div class="col-11 card clacSum" *ngIf="selectedTypeCalc.code==2">
-                                <h5>ההפרש בין מחיר דירה לאחר חישוב מקדם הצמדה למחיר דירה לאחר הנחה מרבית</h5>
-                                <h4>{{ (sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) | number:'1.2-2'}}</h4>
-                                <small>על מנת שההפרש יהיה גדול מ- 500,000 לדירה ממוצעת,<br>
-                                     המחיר למטר כולל מע"מ צריך להיות גבוהה מ- 50,535₪</small>
-                                <small>ומחיר הדירה צריך להיות בגובה של 5,882,354 כולל מע"מ לפני הנחה או לפני הכפלה במקדם</small>
-                            </div>
-                            <div class="col-11 card ">
-                                <h5>הנחה מרבית {{+govaHanacha | number:'1.2-2'}}</h5>
-                                <small>גובה הנחה מרבית מפורסמת בחוברת המכרז ובאתר ההרשמה להגרלות.   הנחה מרבית נקבעת ע"י מועצת מקרקעי ישראל</small>
+                            <div class="col-12 card">
+                                <h5>סה"כ עלות מרכיבי הדירה - <b>לפני הנחה</b></h5>
+                                <h4>{{sumAllMarkivim | number:'1.2-2'}} כולל מע"מ</h4>
                             </div>
                             <div class="col-11 card clacSum">
                                 <h5> מחיר דירה סופי</h5>
-                                <h4 *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))> +govaHanacha">
-                                    {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)+((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100))) | number:'1.2-2'}}</h4>
-                                <h4 *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))<= +govaHanacha">
+                                מקדם או הנחה
+                                <h4
+                                    *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))> +govaHanacha">
+                                    {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)+((sumAllMarkivim *
+                                    (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100))) |
+                                    number:'1.2-2'}}</h4>
+                                <h4
+                                    *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))<= +govaHanacha">
                                     {{sumAllMarkivim -(sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h4>
-                                <small> על מחיר הדירה סופי - יש להוסיף מדד תשומות הבניה ממועד קבלת היתר בנייה, מחושב בעת חתימה על  חוזה המכר עם היזם (קבלן)</small>
+                                הנחה או מגבלה
+                                <h4
+                                    *ngIf="(sumAllMarkivim -govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">
+                                    {{(sumAllMarkivim -govaHanacha) | number:'1.2-2'}}</h4>
+                                <h4
+                                    *ngIf="(sumAllMarkivim -govaHanacha)<(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">
+                                    {{(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) | number:'1.2-2'}}</h4>
                             </div>
                         </div>
                     </div>
