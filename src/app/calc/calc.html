@@ -54,8 +54,8 @@
                                 להזין 2 מקומות לאחר הנקודה ללא עיגול</small>
                         </div>
                         <div class="col-12 card">
-                            <h2> האם בניין רב קומות<span style="color: red;">*</span></h2>
-                            <p-toggleButton (ngModelChange)="onChange($event); RavKomot=9;" [(ngModel)]="isRavKomot"
+                            <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
+                            <p-toggleButton (ngModelChange)="isRavKomot = !isRavKomot; onChange($event);" [(ngModel)]="isRavKomot"
                                 onLabel="כן" offLabel="לא"></p-toggleButton>
                             <span *ngIf="RavKomot<9" style="color: red;">אינו רב קומות</span>
                             <small> נחשב רב קומות מקומה 9 שהיא מעל 29 מטרים מהכניסה</small>
@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-12 card" *ngIf="numberHadarim>=4.5">
                             <h2>האם זו דירת דופלקס<span style="color: red;">*</span></h2>
-                            <p-toggleButton (ngModelChange)="onChange($event)" [(ngModel)]="isDuplex" onLabel="כן"
+                            <p-toggleButton (ngModelChange)="isDuplex = !isDuplex; onChange($event)" [(ngModel)]="isDuplex" onLabel="כן"
                                 offLabel="לא"></p-toggleButton>
                         </div>
                         <div class="col-12 card">
@@ -182,7 +182,7 @@
                         <div class="col-12 card " style="background-color: aquamarine;">
                             <h5>הנחה בשיעור <span>{{hanachaBeshiur}}%</span> של כלל מרכיבי הדירה: {{sumAllMarkivim *
                                 hanachaBeshiur/100 | number:'1.2-2'}}</h5>
-                            <h5>סה"כ עלות מרכיבי הדירה - <b> לאחר הנחה <span>{{hanachaBeshiur}}%</span></b>:
+                            <h5>סה"כ עלות מרכיבי הדירה - <b> לאחר  <span>{{hanachaBeshiur}}%</span> הנחה</b>:
                                 {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h5>
                         </div>
 

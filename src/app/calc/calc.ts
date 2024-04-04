@@ -26,18 +26,18 @@ export class Calc implements OnInit {
     govaHanacha: string[] = [];
     sumAllMarkivim: number;
     hanachaBeshiur = 20;
-    MekademKoma=0;
-    error= false;
+    MekademKoma = 0;
+    error = false;
     harigaShetachDira = 0;
     lookupMisparHadarimShetach = [
-        {hadarim:2.5, shetach:76},
-        {hadarim:3, shetach:90},
-        {hadarim:3.5, shetach:100},
-        {hadarim:4, shetach:110},
-        {hadarim:4.5, shetach:120},
-        {hadarim:5, shetach:125},
-        {hadarim:5.5, shetach:135},
-        {hadarim:6, shetach:145}];
+        { hadarim: 2.5, shetach: 76 },
+        { hadarim: 3, shetach: 90 },
+        { hadarim: 3.5, shetach: 100 },
+        { hadarim: 4, shetach: 110 },
+        { hadarim: 4.5, shetach: 120 },
+        { hadarim: 5, shetach: 125 },
+        { hadarim: 5.5, shetach: 135 },
+        { hadarim: 6, shetach: 145 }];
     shetachDiraPerHadarim = 0;
     //maam = 1.17;
 
@@ -63,21 +63,27 @@ export class Calc implements OnInit {
     }
     onChange(event) {
         console.log(event, event.value);
-
-        this.error= false;
+        this.error = false;
         if (this.RavKomot < this.numberKoma) this.error = true;
         if (this.RavKomot < 9) this.error = true; //this.isRavKomot = false; 
 
+        if (!this.isRavKomot) {
+            this.numberKoma = 0;
+            this.RavKomot = 0;
+            this.MekademKoma = 0;
+        } else
+            this.RavKomot = 9;
+
         
 
-        this.numberHadarim = Math.round(this.numberHadarim*2)/2;//step half
+        this.numberHadarim = Math.round(this.numberHadarim * 2) / 2;//step half
 
         this.lookupMisparHadarimShetach.forEach(item => {//חישוב מטר בנייה עיקרי ושולי
-            if(this.numberHadarim == item.hadarim){
+            if (this.numberHadarim == item.hadarim) {
                 this.shetachDiraPerHadarim = item.shetach;
-                if (this.shetachDira>item.shetach){
+                if (this.shetachDira > item.shetach) {
                     this.harigaShetachDira = this.shetachDira - item.shetach;
-                    if (this.isDuplex && this.numberHadarim >4.5 && this.harigaShetachDira>10) {
+                    if (this.isDuplex && this.numberHadarim > 4.5 && this.harigaShetachDira > 10) {
                         this.harigaShetachDira = 10;
                         this.shetachDira = this.shetachDiraPerHadarim + 10;
                     }
@@ -86,18 +92,20 @@ export class Calc implements OnInit {
                 }
             }
         });
-        
+        if (!this.isDuplex) { 
+            this.harigaShetachDira = 0;
+        }
 
 
         let newMehirShetachMirpesetOrGina = 0;
-        if (this.shetachMirpesetOrGina<=30) newMehirShetachMirpesetOrGina = this.shetachMirpesetOrGina * 30 / 100 ;
-        if (this.shetachMirpesetOrGina>30 && this.shetachMirpesetOrGina<=60) newMehirShetachMirpesetOrGina = 30 * 30 / 100 + (this.shetachMirpesetOrGina-30) * 20 / 100 ;
-        if (this.shetachMirpesetOrGina>60 && this.shetachMirpesetOrGina<=120) newMehirShetachMirpesetOrGina = 30 * 30 / 100 + 30 * 20 / 100 + (this.shetachMirpesetOrGina-60) * 10 / 100 ;
-        if (this.shetachMirpesetOrGina>120) newMehirShetachMirpesetOrGina = 30 * (30+20+10) / 100 ;
+        if (this.shetachMirpesetOrGina <= 30) newMehirShetachMirpesetOrGina = this.shetachMirpesetOrGina * 30 / 100;
+        if (this.shetachMirpesetOrGina > 30 && this.shetachMirpesetOrGina <= 60) newMehirShetachMirpesetOrGina = 30 * 30 / 100 + (this.shetachMirpesetOrGina - 30) * 20 / 100;
+        if (this.shetachMirpesetOrGina > 60 && this.shetachMirpesetOrGina <= 120) newMehirShetachMirpesetOrGina = 30 * 30 / 100 + 30 * 20 / 100 + (this.shetachMirpesetOrGina - 60) * 10 / 100;
+        if (this.shetachMirpesetOrGina > 120) newMehirShetachMirpesetOrGina = 30 * (30 + 20 + 10) / 100;
 
         this.calcRavKomot();
-        let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter*(this.MekademKoma/100));// מחיר מטר לאחר חישוב מקדם קומה
-        this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira-this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira)*0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
+        let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
+        this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
 
         if (this.selectedTypeCalc.code == 1) { this.govaHanacha = ["300000"]; this.hanachaBeshiur = 20; }
         if (this.selectedTypeCalc.code == 2) { this.govaHanacha = ["500000"]; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
@@ -105,22 +113,22 @@ export class Calc implements OnInit {
         this.setToLocalStorage();
     }
     calcRavKomot() {
-        if (this.RavKomot >= 9 && this.RavKomot >= this.numberKoma){
-            let middelOfBuilding = (this.RavKomot+1)/2 ;
+        if (this.RavKomot >= 9 && this.RavKomot >= this.numberKoma) {
+            let middelOfBuilding = (this.RavKomot + 1) / 2;
             this.MekademKoma = 0;
-            for(let i = 0; i < Math.floor(Math.abs(middelOfBuilding-this.numberKoma)); i++) {
-                if (Math.abs(this.MekademKoma)!=5) {
-                    if ((this.numberKoma-middelOfBuilding) >= 1 ) {
+            for (let i = 0; i < Math.floor(Math.abs(middelOfBuilding - this.numberKoma)); i++) {
+                if (Math.abs(this.MekademKoma) != 5) {
+                    if ((this.numberKoma - middelOfBuilding) >= 1) {
                         this.MekademKoma = this.MekademKoma + 0.5;
                     }
-                    if ((this.numberKoma-middelOfBuilding) < 1) {
+                    if ((this.numberKoma - middelOfBuilding) < 1) {
                         this.MekademKoma = this.MekademKoma - 0.5;
                     }
                 }
-                console.log(i,this.numberKoma-middelOfBuilding);
+                //console.log(i,this.numberKoma-middelOfBuilding);
             }
-            console.log(`MekademKoma: ${this.MekademKoma}`);
-            console.log(`middelOfBuilding: ${middelOfBuilding}`);
+            // console.log(`MekademKoma: ${this.MekademKoma}`);
+            // console.log(`middelOfBuilding: ${middelOfBuilding}`);
         }
     }
 
