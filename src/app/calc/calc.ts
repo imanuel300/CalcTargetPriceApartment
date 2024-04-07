@@ -147,8 +147,7 @@ export class Calc implements OnInit {
         window.location.reload();
     }
 }
-
-
+//
 //https://primeng.org/inputtext
 //ng build --output-path docs --base-href /CalcTargetPriceApartment/
 //https://imanuel300.github.io/CalcTargetPriceApartment/
