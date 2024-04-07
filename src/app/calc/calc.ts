@@ -43,7 +43,7 @@ export class Calc implements OnInit {
 
     ngOnInit() {
         this.TypesCalc = [
-            { name: 'הנחה 20% או מירבית 300,000', code: 1 },
+            { name: 'הנחה 20% או מירבית 300,000 או 310,278 ', code: 1 },
             { name: 'הנחה 20% או מקדם 3.4% או 10.3% מגבלה 500,000 ', code: 2 },
             { name: 'הנחה 25% או שומה עדכנית מגבלה 500,000 או 600,000', code: 3 }
         ];
@@ -71,8 +71,9 @@ export class Calc implements OnInit {
             this.numberKoma = 0;
             this.RavKomot = 0;
             this.MekademKoma = 0;
-        } else
-            this.RavKomot = 9;
+        } 
+        //else
+            //this.RavKomot = 9;
 
         
 
@@ -133,7 +134,6 @@ export class Calc implements OnInit {
     }
 
 
-
     setToLocalStorage() {
         console.log(JSON.stringify(this));
         localStorage.setItem('Calc', JSON.stringify(this));
@@ -146,6 +146,7 @@ export class Calc implements OnInit {
         //do refreach page
         window.location.reload();
     }
+    
 }
 //
 //https://primeng.org/inputtext
