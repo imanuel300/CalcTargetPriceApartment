@@ -25,6 +25,9 @@ body {
 .clacSum{
     background-color: rgb(116, 218, 96);
 }
+.p-dropdown-label:focus{
+    outline: none !important;
+}
 
 @import "assets/GovilCoreStyleRtl.css";
 @import "assets/styles.css";

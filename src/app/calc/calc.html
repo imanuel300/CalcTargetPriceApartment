@@ -36,12 +36,7 @@
                         <div class="col-12 card flex justify-content-center">
                             <h2 for="typeA"> בחר סוג שיטה לחישוב ההנחה<span style="color: red;">*</span></h2>
                             <div class="flex align-items-center">
-                                <div *ngFor="let TypeCalc of TypesCalc" class="field-checkbox">
-                                    <p-radioButton (onClick)="onChange($event)" [inputId]="TypeCalc.code"
-                                        name="TypeCalc" [value]="TypeCalc"
-                                        [(ngModel)]="selectedTypeCalc"></p-radioButton>
-                                    <label [for]="TypeCalc.code" class="ml-2">{{ TypeCalc.name }}</label>
-                                </div>
+                                <p-dropdown (onChange)="onChange($event)" [(ngModel)]="selectedTypeCalc" [options]="TypesCalc" optionLabel="name" placeholder=" בחר סוג שיטה לחישוב ההנחה"></p-dropdown>
                             </div>
                         </div>
                         <div class="col-12 card">
