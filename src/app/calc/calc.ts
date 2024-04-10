@@ -12,16 +12,17 @@ interface TypesCalc {
 export class Calc implements OnInit {
     TypesCalc!: TypesCalc[];
     selectedTypeCalc: TypesCalc = { name: '', code: 0 };
-    mehirLemeter = 3000;
-    isRavKomot = true;
-    RavKomot = 9;
-    numberKoma = 10;
-    numberHadarim = 4.5;
+    mehirLemeter;
+    mehirLemeter2;
+    isRavKomot = "1";
+    numberRavKomot;
+    numberKoma;
+    numberHadarim;
     isDuplex = false;
-    shetachDira = 105;
-    shetachMirpesetOrGina = 14;
-    shetachMachsan = 8;
-    shetachHanayot = 2;
+    shetachDira;
+    shetachMirpesetOrGina;
+    shetachMachsan;
+    shetachHanayot;
     mekademHatzmada: string[] = [];
     govaHanacha: string[] = [];
     sumAllMarkivim: number;
@@ -29,6 +30,10 @@ export class Calc implements OnInit {
     MekademKoma = 0;
     error = false;
     harigaShetachDira = 0;
+    stateOptions: any[] = [
+        { label: 'לא', value: '0' },
+        { label: 'כן', value: '1' }
+    ];
     lookupMisparHadarimShetach = [
         { hadarim: 2.5, shetach: 76 },
         { hadarim: 3, shetach: 90 },
@@ -58,24 +63,54 @@ export class Calc implements OnInit {
                     this[key] = element;
                 }
             }
-            this.selectedTypeCalc = this.TypesCalc[this.selectedTypeCalc.code - 1];
         }
+
+        this.chackRequiredfield();
+    }
+    addSampleValue() {
+        this.mehirLemeter = 3000;
+        this.mehirLemeter2 = 3500;
+        this.isRavKomot = "1";
+        this.numberRavKomot = 9;
+        this.numberKoma = 10;
+        this.numberHadarim = 4.5;
+        this.isDuplex = false;
+        this.shetachDira = 105;
+        this.shetachMirpesetOrGina = 14;
+        this.shetachMachsan = 8;
+        this.shetachHanayot = 2;
+    }
+    chackRequiredfield() {
+        if (this.mehirLemeter == undefined) this.error = true;
+        if (this.mehirLemeter2 == undefined && this.selectedTypeCalc.code == 3) this.error = true;
+        if (this.isRavKomot == undefined) this.error = true;
+        if (this.numberRavKomot == undefined && this.isRavKomot) this.error = true;
+        if (this.numberKoma == undefined && this.isRavKomot) this.error = true;
+        if (this.numberHadarim == undefined) this.error = true;
+        if (this.isDuplex == undefined) this.error = true;
+        if (this.shetachDira == undefined) this.error = true;
+        if (this.shetachMirpesetOrGina == undefined) this.error = true;
+        if (this.shetachMachsan == undefined) this.error = true;
+        if (this.shetachHanayot == undefined) this.error = true;
+        if (this.numberRavKomot < this.numberKoma) this.error = true;
     }
     onChange(event) {
+
+
         console.log(event, event.value);
         this.error = false;
-        if (this.RavKomot < this.numberKoma) this.error = true;
-        if (this.RavKomot < 9) this.error = true; //this.isRavKomot = false; 
+        if (this.numberRavKomot < this.numberKoma) this.error = true;
+        if (this.numberRavKomot < 9) this.error = true; //this.isRavKomot = false; 
 
         if (!this.isRavKomot) {
             this.numberKoma = 0;
-            this.RavKomot = 0;
+            this.numberRavKomot = 0;
             this.MekademKoma = 0;
-        } 
+        }
         //else
-            //this.RavKomot = 9;
+        //this.numberRavKomot = 9;
 
-        
+
 
         this.numberHadarim = Math.round(this.numberHadarim * 2) / 2;//step half
 
@@ -93,7 +128,7 @@ export class Calc implements OnInit {
                 }
             }
         });
-        if (!this.isDuplex) { 
+        if (!this.isDuplex) {
             this.harigaShetachDira = 0;
         }
 
@@ -112,10 +147,11 @@ export class Calc implements OnInit {
         if (this.selectedTypeCalc.code == 2) { this.govaHanacha = ["500000"]; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
         if (this.selectedTypeCalc.code == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
         this.setToLocalStorage();
+        this.chackRequiredfield();
     }
     calcRavKomot() {
-        if (this.RavKomot >= 9 && this.RavKomot >= this.numberKoma) {
-            let middelOfBuilding = (this.RavKomot + 1) / 2;
+        if (this.numberRavKomot >= 9 && this.numberRavKomot >= this.numberKoma) {
+            let middelOfBuilding = (this.numberRavKomot + 1) / 2;
             this.MekademKoma = 0;
             for (let i = 0; i < Math.floor(Math.abs(middelOfBuilding - this.numberKoma)); i++) {
                 if (Math.abs(this.MekademKoma) != 5) {
@@ -146,7 +182,7 @@ export class Calc implements OnInit {
         //do refreach page
         window.location.reload();
     }
-    
+
 }
 
 //https://primeng.org/inputtext

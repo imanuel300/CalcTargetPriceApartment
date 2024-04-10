@@ -12,13 +12,30 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+small {
+    min-width: 233px;
+}
+.dirLtr{
+    direction: ltr;
+}
 
 .card {
     background: var(--surface-card);
-    padding: 1rem;
-    border-radius: 10px;
-    margin-bottom: 1rem;
+    padding: 3px 22px;
+    border-radius: 1px;
+    margin-bottom: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
+
+.bg{
+    background-color: aquamarine;
+ }
+ .h2, h2 {
+    max-width: 299px;
+ }
 .clacWin{
     background-color: aquamarine;
 }
@@ -27,6 +44,12 @@ body {
 }
 .p-dropdown-label:focus{
     outline: none !important;
+}
+
+@media only screen and (max-device-width: 850px){ 
+    .card {
+        flex-direction: column;
+    }
 }
 
 @import "assets/GovilCoreStyleRtl.css";
