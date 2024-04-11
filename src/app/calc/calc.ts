@@ -14,17 +14,17 @@ export class Calc implements OnInit {
     selectedTypeCalc: TypesCalc = { name: '', code: 0 };
     mehirLemeter;
     mehirLemeter2;
-    isRavKomot = "1";
+    isRavKomot = "0";
     numberRavKomot;
     numberKoma;
     numberHadarim;
-    isDuplex = false;
+    isDuplex = "0";
     shetachDira;
     shetachMirpesetOrGina;
     shetachMachsan;
     shetachHanayot;
     mekademHatzmada: string[] = [];
-    govaHanacha: string[] = [];
+    govaHanacha;
     sumAllMarkivim: number;
     hanachaBeshiur = 20;
     MekademKoma = 0;
@@ -70,24 +70,25 @@ export class Calc implements OnInit {
     addSampleValue() {
         this.mehirLemeter = 3000;
         this.mehirLemeter2 = 3500;
-        this.isRavKomot = "1";
+        this.isRavKomot = "0";
         this.numberRavKomot = 9;
-        this.numberKoma = 10;
+        this.numberKoma = 8;
         this.numberHadarim = 4.5;
-        this.isDuplex = false;
+        this.isDuplex = "0";
         this.shetachDira = 105;
         this.shetachMirpesetOrGina = 14;
         this.shetachMachsan = 8;
         this.shetachHanayot = 2;
+        this.govaHanacha = 300000;
     }
     chackRequiredfield() {
         if (this.mehirLemeter == undefined) this.error = true;
-        if (this.mehirLemeter2 == undefined && this.selectedTypeCalc.code == 3) this.error = true;
+        if (this.mehirLemeter2 == undefined && +this.selectedTypeCalc == 3) this.error = true;
         if (this.isRavKomot == undefined) this.error = true;
         if (this.numberRavKomot == undefined && this.isRavKomot) this.error = true;
         if (this.numberKoma == undefined && this.isRavKomot) this.error = true;
         if (this.numberHadarim == undefined) this.error = true;
-        if (this.isDuplex == undefined) this.error = true;
+        if (this.isDuplex == undefined && this.numberHadarim>=4.5) this.error = true;
         if (this.shetachDira == undefined) this.error = true;
         if (this.shetachMirpesetOrGina == undefined) this.error = true;
         if (this.shetachMachsan == undefined) this.error = true;
@@ -95,9 +96,8 @@ export class Calc implements OnInit {
         if (this.numberRavKomot < this.numberKoma) this.error = true;
     }
     onChange(event) {
-
-
-        console.log(event, event.value);
+        console.log(event);
+        if (event) console.log(event.value);
         this.error = false;
         if (this.numberRavKomot < this.numberKoma) this.error = true;
         if (this.numberRavKomot < 9) this.error = true; //this.isRavKomot = false; 
@@ -110,8 +110,6 @@ export class Calc implements OnInit {
         //else
         //this.numberRavKomot = 9;
 
-
-
         this.numberHadarim = Math.round(this.numberHadarim * 2) / 2;//step half
 
         this.lookupMisparHadarimShetach.forEach(item => {//חישוב מטר בנייה עיקרי ושולי
@@ -119,7 +117,7 @@ export class Calc implements OnInit {
                 this.shetachDiraPerHadarim = item.shetach;
                 if (this.shetachDira > item.shetach) {
                     this.harigaShetachDira = this.shetachDira - item.shetach;
-                    if (this.isDuplex && this.numberHadarim > 4.5 && this.harigaShetachDira > 10) {
+                    if (this.isDuplex=='1' && +this.numberHadarim >= 4.5 && this.harigaShetachDira > 10) {
                         this.harigaShetachDira = 10;
                         this.shetachDira = this.shetachDiraPerHadarim + 10;
                     }
@@ -128,7 +126,7 @@ export class Calc implements OnInit {
                 }
             }
         });
-        if (!this.isDuplex) {
+        if (this.isDuplex=='0') {
             this.harigaShetachDira = 0;
         }
 
@@ -143,9 +141,9 @@ export class Calc implements OnInit {
         let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
         this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
 
-        if (this.selectedTypeCalc.code == 1) { this.govaHanacha = ["300000"]; this.hanachaBeshiur = 20; }
-        if (this.selectedTypeCalc.code == 2) { this.govaHanacha = ["500000"]; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
-        if (this.selectedTypeCalc.code == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
+        if (+this.selectedTypeCalc.code == 1) { this.hanachaBeshiur = 20; }
+        if (+this.selectedTypeCalc.code == 2) { this.govaHanacha = ["500000"]; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
+        if (+this.selectedTypeCalc.code == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
         this.setToLocalStorage();
         this.chackRequiredfield();
     }
