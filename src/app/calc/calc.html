@@ -95,7 +95,7 @@
                             <div class="leftSize">
                                 <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
                                 <small>
-                                    <span *ngIf="numberRavKomot<10" style="color: red;">אינו רב קומות</span> <br>
+                                    <span *ngIf="numberRavKomot<10 && numberRavKomot!=null" style="color: red;">אינו רב קומות<br></span> 
                                     <span *ngIf="isRavKomot=='0'">10 קומות ומעלה, מעל קומת הקרקע</span>
                                     <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span>
                                 </small>

@@ -95,20 +95,19 @@ export class Calc implements OnInit {
         if (this.shetachMirpesetOrGina == undefined) this.error = true;
         if (this.shetachMachsan == undefined) this.error = true;
         if (this.shetachHanayot == undefined) this.error = true;
-        if (this.numberRavKomot < this.numberKoma) this.error = true;
+        if (this.numberRavKomot < this.numberKoma && this.isRavKomot=="1") this.error = true;
         if (this.mekademHatzmada == undefined) this.error = true;
     }
     onChange(event) {
         console.log(event);
         if (event) console.log(event.value);
         this.error = false;
-        if (this.numberRavKomot < this.numberKoma) this.error = true;
-        if (this.numberRavKomot < 9) this.error = true; //this.isRavKomot = false; 
+       
 
         if (this.isRavKomot=="0") {
             console.log("isRavKomot",this.isRavKomot);
-            this.numberKoma = 0;
-            this.numberRavKomot = 0;
+            this.numberKoma = null;
+            this.numberRavKomot = null;
             this.MekademKoma = 0;
         }
         //else
