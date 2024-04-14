@@ -349,24 +349,28 @@
                             <div class="col-sm-12 card" style="margin-top: 20px;">
                                 <div class="leftSize">
                                     <h2> מחיר דירה סופי</h2>
+                                    <small *ngIf="(sumAllMarkivim -govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">ע"פ מגבלה <b>{{+govaHanacha | number:'1.2-2'}}</b></small>
+                                    <small *ngIf="(sumAllMarkivim -govaHanacha)<(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">ע"פ הנחה <b>{{hanachaBeshiur}}%</b></small>
                                 </div>
-                                <input class="p-inputtext p-component p-element clacSum" [disabled]="true"
+                                <!-- עפ שיטח חישוב מקדם או הנחה -->
+                                <!-- <input class="p-inputtext p-component p-element clacSum" [disabled]="true"
                                     *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))> +govaHanacha"
                                     value="{{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)+((sumAllMarkivim *
                                 (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100))) |
-                                 number:'1.2-2'}}" />
-                                <!-- עפ שיטח חישוב מקדם או הנחה -->
+                                 number:'1.2-2'}}" /> -->
+                                <!-- עפ שיטח חישוב הנחה או מגבלה -->
+                                <input class="p-inputtext p-component p-element clacSum a" [disabled]="true"
+                                *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))<= +govaHanacha"
+                                value="{{sumAllMarkivim -(sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}" />
+                                
+                                <input class="p-inputtext p-component p-element clacSum b " [disabled]="true"
+                                *ngIf="(sumAllMarkivim -govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) "
+                                value="{{(sumAllMarkivim -govaHanacha) | number:'1.2-2'}}" />
 
-                                <!-- <h5
-                                    *ngIf="((sumAllMarkivim * (1+mekademHatzmada/100))-(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)))<= +govaHanacha">
-                                    {{sumAllMarkivim -(sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h5>
-                                עפ שיטח חישוב הנחה או מגבלה -->
-                                <!-- <h5
-                                    *ngIf="(sumAllMarkivim -govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">
-                                    {{(sumAllMarkivim -govaHanacha) | number:'1.2-2'}}</h5>
-                                <h5
-                                    *ngIf="(sumAllMarkivim -govaHanacha)<(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">
-                                    {{(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) | number:'1.2-2'}}</h5> -->
+                                <input class="p-inputtext p-component p-element clacSum c" [disabled]="true"
+                                *ngIf="(sumAllMarkivim -govaHanacha)<(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) "
+                                value="{{(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) | number:'1.2-2'}}" />
+                                
                             </div>
                         </div>
                     </div>

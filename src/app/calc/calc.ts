@@ -143,9 +143,9 @@ export class Calc implements OnInit {
         let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
         this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
 
-        if (+this.selectedTypeCalc.code == 1) { this.hanachaBeshiur = 20; }
-        if (+this.selectedTypeCalc.code == 2) { this.govaHanacha = ["500000"]; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
-        if (+this.selectedTypeCalc.code == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
+        if (+this.selectedTypeCalc == 1) { this.hanachaBeshiur = 20; }
+        if (+this.selectedTypeCalc == 2) { this.govaHanacha = 500000; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
+        if (+this.selectedTypeCalc == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
         this.setToLocalStorage();
         this.chackRequiredfield();
     }
