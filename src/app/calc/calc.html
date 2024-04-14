@@ -5,7 +5,7 @@
                 <div class='col-sm-2' style="float: right;">
                     <div class="" style="width:100%;">
                         <div class="pull-right headerLogo"><a routerlink="/Home" href="/TeleUI/Home"><img
-                                    style="width: 180px;" id="logo" title="לוגו משרד השיכון" src="assets/logo.svg"></a>
+                                    style="width: 180px;" id="logo" title="משרד הבינוי והשיכון" alt="משרד הבינוי והשיכון" src="assets/logo.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -22,10 +22,10 @@
                         <div>
                             <div class='col-sm-12' style="float: right;">
                                 <span style="text-align: center;">
-                                    <h1 style="font-size: 40px;color: #0d488e;">
+                                    <h1 style="font-size: 36px;color: #0d488e;">
                                         מחשבון לחישוב מחיר דירת<b> מחיר מטרה</b>
                                     </h1>
-                                    <h4 style="color: red;">הפרמטרים מפורסמים בחוברת המכרז ליזמים</h4>
+                                    <h5 style="color: red;">הפרמטרים מפורסמים בחוברת המכרז ליזמים</h5>
 
                                 </span>
                             </div>
@@ -94,9 +94,9 @@
                             <div class="leftSize">
                                 <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
                                 <small>
-                                    <!-- <span *ngIf="RavKomot<9" style="color: red;">אינו רב קומות</span> <br> -->
+                                     <span *ngIf="numberRavKomot<9" style="color: red;">אינו רב קומות</span> <br> 
                                     <span *ngIf="isRavKomot=='0'">10 קומות ומעלה, מעל קומת הקרקע</span>
-                                    <!-- <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span> -->
+                                     <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span> 
                                 </small>
                             </div>
 
@@ -108,7 +108,7 @@
                             <div class="leftSize">
                                 <h2>מספר קומות בבניין<span style="color: red;">*</span></h2>
                                 <small>
-                                    <!-- ערכים מותרים בין 0 (קומת קרקע) ל- 30<br>  -->
+                                     ערכים מותרים בין 0 (קומת קרקע) ל- 30 
                                 </small>
                             </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberRavKomot"
@@ -121,7 +121,7 @@
                                 <small>
                                     <span *ngIf="numberRavKomot < numberKoma" style="color: red;">מספר קומה לא יכול
                                         להיות מעל מספר הקומות בבניין<br></span>
-                                    <!-- ערכים מותרים בין 0 (קומת קרקע) ל- 50 , מספרים שלמים בלבד  -->
+                                     ערכים מותרים בין 0 (קומת קרקע) ל- 50 , מספרים שלמים בלבד 
                                 </small>
                             </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberKoma" inputId="minmaxfraction"
@@ -220,7 +220,7 @@
                         </div>
                         <div *ngIf="!error">
                             <div class="col-12 card bg">
-                                <h2>סה"כ עלות מרכיבי הדירה - כולל מע"מ - נכון לפי שומה דצמבר 2020, <b>לפני הנחה</b>:
+                                <h2>סה"כ עלות מרכיבי הדירה  כולל מע"מ  נכון לפי שומה דצמבר 2020, <b>לפני הנחה</b>:
                                 </h2>
                                 <p-inputNumber inputId="decimal" [disabled]="true" [(ngModel)]="sumAllMarkivim">
                                 </p-inputNumber>
@@ -231,7 +231,7 @@
                                     hanachaBeshiur/100 | number:'1.2-2'}}" />
                             </div>
                             <div class="col-12 card bg">
-                                <h2>סה"כ עלות מרכיבי הדירה - <b> לאחר <span>{{hanachaBeshiur}}%</span> הנחה</b>:</h2>
+                                <h2>סה"כ עלות מרכיבי הדירה <b> לאחר <span>{{hanachaBeshiur}}%</span> הנחה</b>:</h2>
                                 <input class="p-inputtext p-component" [disabled]="true"
                                     value=" {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}" />
                             </div>

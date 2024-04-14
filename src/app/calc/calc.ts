@@ -86,8 +86,8 @@ export class Calc implements OnInit {
         if (this.mehirLemeter == undefined) this.error = true;
         if (this.mehirLemeter2 == undefined && +this.selectedTypeCalc == 3) this.error = true;
         if (this.isRavKomot == undefined) this.error = true;
-        if (this.numberRavKomot == undefined && this.isRavKomot) this.error = true;
-        if (this.numberKoma == undefined && this.isRavKomot) this.error = true;
+        if (this.numberRavKomot == undefined && this.isRavKomot=="1") this.error = true;
+        if (this.numberKoma == undefined && this.isRavKomot=="1") this.error = true;
         if (this.numberHadarim == undefined) this.error = true;
         if (this.isDuplex == undefined && this.numberHadarim>=4.5) this.error = true;
         if (this.shetachDira == undefined) this.error = true;

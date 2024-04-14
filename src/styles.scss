@@ -39,7 +39,9 @@ small {
     flex-wrap: wrap;
     height: fit-content;
 }
-
+input:disabled {
+    font-weight: bold;
+}
 .bg{
     background-color: rgb(224, 224, 224);
  }
