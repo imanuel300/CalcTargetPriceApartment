@@ -65,9 +65,9 @@ input:disabled {
     .card {
         flex-direction: column;
     }
-    .h2, h2, .leftSize {
+     .calculator .h2, .calculator h2, .calculator .leftSize {
         width: 100%;
-     }
+    }
 }
 
 @import "assets/GovilCoreStyleRtl.css";
