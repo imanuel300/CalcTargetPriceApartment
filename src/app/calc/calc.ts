@@ -105,7 +105,8 @@ export class Calc implements OnInit {
         if (this.numberRavKomot < this.numberKoma) this.error = true;
         if (this.numberRavKomot < 9) this.error = true; //this.isRavKomot = false; 
 
-        if (!this.isRavKomot) {
+        if (this.isRavKomot=="0") {
+            console.log("isRavKomot",this.isRavKomot);
             this.numberKoma = 0;
             this.numberRavKomot = 0;
             this.MekademKoma = 0;

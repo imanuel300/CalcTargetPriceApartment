@@ -95,7 +95,7 @@
                             <div class="leftSize">
                                 <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
                                 <small>
-                                    <span *ngIf="numberRavKomot<9" style="color: red;">אינו רב קומות</span> <br>
+                                    <span *ngIf="numberRavKomot<10" style="color: red;">אינו רב קומות</span> <br>
                                     <span *ngIf="isRavKomot=='0'">10 קומות ומעלה, מעל קומת הקרקע</span>
                                     <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span>
                                 </small>
@@ -113,7 +113,7 @@
                                 </small>
                             </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberRavKomot"
-                                inputId="minmaxfraction" mode="decimal" [min]="9" [max]="50" [minFractionDigits]="0">
+                                inputId="minmaxfraction" mode="decimal" [min]="10" [max]="50" [minFractionDigits]="0">
                             </p-inputNumber>
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot=='1'">
