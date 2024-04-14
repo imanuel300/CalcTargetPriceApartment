@@ -80,6 +80,7 @@ export class Calc implements OnInit {
         this.shetachMachsan = 8;
         this.shetachHanayot = 2;
         this.govaHanacha = 300000;
+        this.mekademHatzmada = ['10.3'] ;
     }
     chackRequiredfield() {
         if (this.mehirLemeter == undefined) this.error = true;
@@ -94,6 +95,7 @@ export class Calc implements OnInit {
         if (this.shetachMachsan == undefined) this.error = true;
         if (this.shetachHanayot == undefined) this.error = true;
         if (this.numberRavKomot < this.numberKoma) this.error = true;
+        if (this.mekademHatzmada == undefined) this.error = true;
     }
     onChange(event) {
         console.log(event);

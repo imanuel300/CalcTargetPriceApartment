@@ -30,16 +30,21 @@ small {
     border-radius: 1px;
     margin-bottom: 3px;
     display: flex;
+    justify-content: flex-start;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+}
+.p-element{
+    display: inline-flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: fit-content;
 }
 
 .bg{
-    background-color: aquamarine;
+    background-color: rgb(224, 224, 224);
  }
- .h2, h2 {
-    max-width: 299px;
+ .h2, h2, .leftSize {
+    width: 60%;
  }
 .clacWin{
     background-color: aquamarine;
@@ -55,6 +60,9 @@ small {
     .card {
         flex-direction: column;
     }
+    .h2, h2, .leftSize {
+        width: 100%;
+     }
 }
 
 @import "assets/GovilCoreStyleRtl.css";

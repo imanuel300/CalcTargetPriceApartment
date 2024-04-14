@@ -5,7 +5,7 @@
                 <div class='col-sm-2' style="float: right;">
                     <div class="" style="width:100%;">
                         <div class="pull-right headerLogo"><a routerlink="/Home" href="/TeleUI/Home"><img
-                                    style="width: 260px;" id="logo" title="לוגו משרד השיכון" src="assets/logo.png"></a>
+                                    style="width: 180px;" id="logo" title="לוגו משרד השיכון" src="assets/logo.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -23,8 +23,7 @@
                             <div class='col-sm-12' style="float: right;">
                                 <span style="text-align: center;">
                                     <h1 style="font-size: 40px;color: #0d488e;">
-                                        פרמטרים
-                                        לחישוב מחיר דירת <br>"מחיר מטרה"
+                                        מחשבון לחישוב מחיר דירת<b> מחיר מטרה</b>
                                     </h1>
                                     <h4 style="color: red;">הפרמטרים מפורסמים בחוברת המכרז ליזמים</h4>
 
@@ -39,70 +38,96 @@
                         <small *ngIf="error" class="col-12" style="color: red;">* שדה חובה</small>
                         <div class="col-12 card flex ">
                             <h2 for="typeA">בחר סוג שיטה לחישוב ההנחה<span style="color: red;">*</span></h2>
-                            <div class="flex align-items-center">
+                            <div class="flex align-items-center" style="margin: 10px 0 0;">
                                 <!-- <p-dropdown (onChange)="onChange($event)" [(ngModel)]="selectedTypeCalc"
                                     [options]="TypesCalc" optionLabel="name"
                                     placeholder=" בחר שיטת חישוב "></p-dropdown> -->
-                                    <p-selectButton class="dirLtr selectedTypeCalc" (click)="onChange($event)" [options]="TypesCalc"
-                                [(ngModel)]="selectedTypeCalc" optionLabel="name" optionValue="code"></p-selectButton>
+                                <!-- <p-selectButton class="dirLtr selectedTypeCalc" (click)="onChange($event)" [options]="TypesCalc"
+                                [(ngModel)]="selectedTypeCalc" optionLabel="name" optionValue="code"></p-selectButton> -->
+                                <div class="flex flex-column gap-3">
+                                    <div *ngFor="let TypeCalc of TypesCalc" class="field-checkbox">
+                                        <p-radioButton (ngModelChange)="onChange($event)" [inputId]="TypeCalc.code"
+                                            name="TypeCalc.code" [value]="TypeCalc.code"
+                                            [(ngModel)]="selectedTypeCalc"></p-radioButton>
+                                        <label [for]="TypeCalc.code" class="mr-2">{{ TypeCalc.name }}</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 card">
-                            <h2> מחיר למטר כולל מע"מ<span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2> מחיר למטר כולל מע"מ<span style="color: red;">*</span></h2>
+                                <small>
+                                    <span *ngIf="MekademKoma!=0">מחיר למטר - לאחר תוספת או הפחתה של מקדם הקומה:
+                                        <b>{{mehirLemeter
+                                            + (mehirLemeter*(MekademKoma/100))}}</b><br></span>
+                                    <!-- ערכים מותרים בין 3,000 ל- 35,000 <br> -->
+                                    <span *ngIf="+selectedTypeCalc!=3"> לפי שומה נכונה לדצמבר 2020 <br></span>
+
+                                    להזין 2 מקומות לאחר הנקודה ללא עיגול</small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="mehirLemeter"
                                 inputId="minmaxfraction" mode="decimal" [min]="3000" [max]="35000"
                                 [minFractionDigits]="2"> </p-inputNumber>
 
-                            <small>
-                                <span *ngIf="MekademKoma!=0">מחיר למטר - לאחר תוספת או הפחתה של מקדם הקומה:
-                                    <b>{{mehirLemeter
-                                        + (mehirLemeter*(MekademKoma/100))}}</b><br></span>
-                                ערכים מותרים בין 3,000 ל- 35,000 <br>
-                                <span *ngIf="+selectedTypeCalc!=3"> לפי שומה נכונה לדצמבר 2020 <br></span>
 
-                                להזין 2 מקומות לאחר הנקודה ללא עיגול</small>
                         </div>
                         <div class="col-12 card" *ngIf="+selectedTypeCalc==3">
-                            <h2> מחיר למטר כולל מע"מ – מחושב לפי שומה עדכנית<span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2> מחיר למטר כולל מע"מ – מחושב לפי שומה עדכנית<span style="color: red;">*</span></h2>
+                                <small>
+                                    <span *ngIf="MekademKoma!=0">מחיר למטר - לאחר תוספת או הפחתה של מקדם הקומה:
+                                        <b>{{mehirLemeter
+                                            + (mehirLemeter2*(MekademKoma/100))}}</b><br></span>
+                                    <!-- ערכים מותרים בין 3,000 ל- 35,000 <br> -->
+                                    להזין 2 מקומות לאחר הנקודה ללא עיגול<br>
+                                    לצורך בדיקת ההגבלה על המחיר למטר לפי שומה עדכנית
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="mehirLemeter2"
                                 inputId="minmaxfraction" mode="decimal" [min]="3000" [max]="35000"
                                 [minFractionDigits]="2"> </p-inputNumber>
 
-                            <small>
-                                <span *ngIf="MekademKoma!=0">מחיר למטר - לאחר תוספת או הפחתה של מקדם הקומה:
-                                    <b>{{mehirLemeter
-                                        + (mehirLemeter2*(MekademKoma/100))}}</b><br></span>
-                                ערכים מותרים בין 3,000 ל- 35,000 <br>
-                                להזין 2 מקומות לאחר הנקודה ללא עיגול<br>
-                                לצורך בדיקת ההגבלה על המחיר למטר לפי שומה עדכנית
-                            </small>
+
                         </div>
                         <div class="col-12 card">
-                            <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2> האם בניין רב קומות? <span style="color: red;">*</span></h2>
+                                <small>
+                                    <!-- <span *ngIf="RavKomot<9" style="color: red;">אינו רב קומות</span> <br> -->
+                                    <span *ngIf="isRavKomot=='0'">10 קומות ומעלה, מעל קומת הקרקע</span>
+                                    <!-- <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span> -->
+                                </small>
+                            </div>
+
                             <p-selectButton class="dirLtr" (click)="onChange($event);" [options]="stateOptions"
                                 [(ngModel)]="isRavKomot" optionLabel="label" optionValue="value"></p-selectButton>
-                            <small>
-                                <!-- <span *ngIf="RavKomot<9" style="color: red;">אינו רב קומות</span> <br> -->
-                                <span *ngIf="isRavKomot=='0'">10 קומות ומעלה, מעל קומת הקרקע</span>
-                                <span *ngIf="isRavKomot=='1'">ערכים מותרים בין 10 עד 30</span>
-                            </small>
+
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot=='1'">
-                            <h2>מספר קומות בבניין<span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>מספר קומות בבניין<span style="color: red;">*</span></h2>
+                                <small>
+                                    <!-- ערכים מותרים בין 0 (קומת קרקע) ל- 30<br>  -->
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberRavKomot"
                                 inputId="minmaxfraction" mode="decimal" [min]="9" [max]="50" [minFractionDigits]="0">
                             </p-inputNumber>
-                            <small>ערכים מותרים בין 0 (קומת קרקע) ל- 30<br> </small>
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot=='1'">
-                            <h2>מספר קומה של הדירה<span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>מספר קומה של הדירה<span style="color: red;">*</span></h2>
+                                <small>
+                                    <span *ngIf="numberRavKomot < numberKoma" style="color: red;">מספר קומה לא יכול
+                                        להיות מעל מספר הקומות בבניין<br></span>
+                                    <!-- ערכים מותרים בין 0 (קומת קרקע) ל- 50 , מספרים שלמים בלבד  -->
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberKoma" inputId="minmaxfraction"
                                 mode="decimal" [min]="0" [max]="50" [minFractionDigits]="0">
                             </p-inputNumber>
-                            <small>
-                                <span *ngIf="numberRavKomot < numberKoma" style="color: red;">מספר קומה לא יכול
-                                    להיות מעל מספר הקומות בבניין<br></span>
-                                ערכים מותרים בין 0 (קומת קרקע) ל- 50 , מספרים שלמים בלבד </small>
+
                         </div>
                         <div class="col-12 card bg" *ngIf="MekademKoma!=0 && mehirLemeter>0 && !error">
                             <h4>אחוז מקדם קומה: <b>{{MekademKoma}}%.</b> לאחר תוספת או הפחתה של מקדם הקומה <b> המחיר
@@ -113,142 +138,176 @@
                                     (mehirLemeter2*(MekademKoma/100))}}.</b></h4>
                         </div>
 
-                        <div class="col-12 card" >
-                            <h2>מספר חדרים בדירה<span style="color: red;">*</span></h2>
+                        <div class="col-12 card">
+                            <div class="leftSize">
+                                <h2>מספר חדרים בדירה<span style="color: red;">*</span></h2>
+                                <small>
+                                    <!-- ערכים מותרים בין 2.5 ל- 6 <br> -->
+                                    השטח המירבי ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר.<br>
+                                </small>
+                            </div>
                             <!-- <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="numberHadarim"
                                 inputId="minmaxfraction" mode="decimal" [step]="0.5" [min]="2.5" [max]="6"
                                 [minFractionDigits]="1">
                             </p-inputNumber> -->
                             <p-dropdown (onChange)="onChange($event)" [(ngModel)]="numberHadarim"
-                                    [options]="lookupMisparHadarimShetach" optionLabel="hadarim"  optionValue="hadarim"
-                                    placeholder="מספר חדרים בדירה"></p-dropdown>
-                            
-                            <small>ערכים מותרים בין 2.5 ל- 6 <br>
-                               השטח המירבי  ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר.<br>
-                            </small>
+                                [options]="lookupMisparHadarimShetach" optionLabel="hadarim" optionValue="hadarim"
+                                placeholder="מספר חדרים בדירה"></p-dropdown>
                         </div>
-                        <div class="col-12 card" *ngIf="numberHadarim>=4.5">
-                            <h2>האם זו דירת דופלקס<span style="color: red;">*</span></h2>
+                        <div class="col-12 card" *ngIf="numberHadarim >= 4.5">
+                            <div class="leftSize">
+                                <h2>האם זו דירת דופלקס<span style="color: red;">*</span></h2>
+                                <small>ניתן להוסיף עד 10 מטר לשטח המירבי</small>
+                            </div>
                             <p-selectButton class="dirLtr" (click)="onChange($event)" [options]="stateOptions"
                                 [(ngModel)]="isDuplex" optionLabel="label" optionValue="value"></p-selectButton>
-                            <small>ניתן להוסיף עד 10 מטר לשטח המירבי</small>
+
                         </div>
                         <div class="col-12 card">
-                            <h2>שטח דירה כולל מממ"ד במטרים <span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>שטח דירה כולל מממ"ד במטרים <span style="color: red;">*</span></h2>
+                                <small>
+                                    <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">לא ניתן לחרוג מעל 10 מטר מהגודל
+                                        המירבי</span>
+                                    השטח המירבי ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר.<br>
+                                    שטח דירה מירבי מוכפל ב- 100% מחיר למטר. מעל שטח מירבי מכפילים 85% משווי מטר.<br>
+                                    <!-- ערכים מותרים בין 50 ל- 199 -->
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachDira" inputId="minmaxfraction"
                                 mode="decimal" [min]="50" [max]="199" [minFractionDigits]="0">
                             </p-inputNumber>
-                            <small>
-                                <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">לא ניתן לחרוג מעל 10 מטר מהגודל המירבי</span>
-                                השטח המירבי  ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר.<br>
-                                    שטח דירה מירבי מוכפל ב- 100% מחיר למטר.  מעל שטח מירבי מכפילים 85% משווי מטר.<br>
-                                    ערכים מותרים בין 50 ל- 199
-                                
-                            </small>
                         </div>
 
                         <div class="col-12 card bg" *ngIf="harigaShetachDira!=0">
-                            <h4> גודל דירה מירבי: {{shetachDiraPerHadarim}} מטר, שטח חורג מעל לגודל דירה מירבי:
-                                {{harigaShetachDira}} מטר.</h4>
-                            <small>שטח חורג מוכפל ב 85% משווי מחיר למטר בנייה עיקרי {{newMehirLemeter}}</small>
+                            <h4> גודל דירה מירבי: <b>{{shetachDiraPerHadarim}}</b> מטר, שטח חורג מעל לגודל דירה מירבי:
+                                <b>{{harigaShetachDira}} מטר.</b>
+                            </h4>
+                            <small>שטח חורג מוכפל ב 85% משווי מחיר למטר בנייה עיקרי <b>{{newMehirLemeter}}</b></small>
                         </div>
                         <div class="col-12 card">
-                            <h2>שטח מרפסת ו/או גינה במטרים <span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>שטח מרפסת ו/או גינה במטרים <span style="color: red;">*</span></h2>
+                                <small>
+                                    עלות מטר מרפסת 30% ממחיר למטר.<br>
+                                    מעל 30 מטר עד 60 מטר מוכפל ב- 20% <br>
+                                    מעל 60 מטר עד 120 מטר מוכפל ב- 10% <br>
+                                    מעל 120 מטר לא תחול גבייה
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachMirpesetOrGina"
                                 inputId="minmaxfraction" mode="decimal" [min]="0"></p-inputNumber>
-                            <small>
-                                עלות מטר מרפסת 30% ממחיר למטר.<br>
-                                מעל 30 מטר עד 60 מטר מוכפל ב- 20% <br>
-                                מעל 60 מטר עד 120 מטר מוכפל ב- 10% <br>
-                                מעל 120 מטר לא תחול גבייה
-                            </small>
                         </div>
                         <div class="col-12 card">
-                            <h2>שטח מחסן במטרים <span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>שטח מחסן במטרים <span style="color: red;">*</span></h2>
+                                <small>מוכפל ב- 40% ממחיר למטר<br>
+                                    <!-- ערכים מותרים בין 2 ל- 14 -->
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachMachsan"
                                 inputId="minmaxfraction" mode="decimal" [min]="2" [max]="14"></p-inputNumber>
-                            <small>מוכפל ב- 40% ממחיר למטר<br><br>
-                                ערכים מותרים בין 2 ל- 14
-                            </small>
                         </div>
                         <div class="col-12 card">
-                            <h2>מספר חניות<span style="color: red;">*</span></h2>
+                            <div class="leftSize">
+                                <h2>מספר חניות<span style="color: red;">*</span></h2>
+                                <small> מוכפל ב- 200% ממחיר למטר<br>
+                                    <!-- ערכים מותרים 1 או 2 -->
+                                </small>
+                            </div>
                             <p-inputNumber (keyup)="onChange($event)" [(ngModel)]="shetachHanayot"
                                 inputId="minmaxfraction" mode="decimal" [min]="1" [max]="2"></p-inputNumber>
-                            <small> מוכפל ב- 200% ממחיר למטר<br><br>
-                                ערכים מותרים 1 או 2
-                            </small>
                         </div>
                         <div *ngIf="!error">
                             <div class="col-12 card bg">
-                                <h4>סה"כ עלות מרכיבי הדירה - {{sumAllMarkivim | number:'1.2-2'}} כולל מע"מ - נכון לפי
-                                    שומה
-                                    דצמבר 2020, <b>לפני הנחה</b></h4>
+                                <h2>סה"כ עלות מרכיבי הדירה - כולל מע"מ - נכון לפי שומה דצמבר 2020, <b>לפני הנחה</b>:
+                                </h2>
+                                <p-inputNumber inputId="decimal" [disabled]="true" [(ngModel)]="sumAllMarkivim">
+                                </p-inputNumber>
                             </div>
                             <div class="col-12 card bg">
-                                <h4>הנחה בשיעור <span>{{hanachaBeshiur}}%</span> של כלל מרכיבי הדירה: {{sumAllMarkivim *
-                                    hanachaBeshiur/100 | number:'1.2-2'}}</h4>
+                                <h2>הנחה בשיעור <span><b>{{hanachaBeshiur}}%</b></span> של כלל מרכיבי הדירה:</h2>
+                                <input class="p-inputtext p-component" [disabled]="true" value="{{sumAllMarkivim *
+                                    hanachaBeshiur/100 | number:'1.2-2'}}" />
                             </div>
                             <div class="col-12 card bg">
-                                <h4>סה"כ עלות מרכיבי הדירה - <b> לאחר <span>{{hanachaBeshiur}}%</span> הנחה</b>:
-                                    {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}</h4>
+                                <h2>סה"כ עלות מרכיבי הדירה - <b> לאחר <span>{{hanachaBeshiur}}%</span> הנחה</b>:</h2>
+                                <input class="p-inputtext p-component" [disabled]="true"
+                                    value=" {{sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100) | number:'1.2-2'}}" />
                             </div>
                         </div>
                         <div class="col-12 card" *ngIf="+selectedTypeCalc==2">
-                            <h2> מקדם הצמדה קבוע <span style="color: red;">*</span></h2>
-                            <div class="flex align-items-center">
-                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada103" [value]="10.3"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
-                                <label [for]="mekademHatzmada103" class="ml-2">10.3%</label>
+                            <div class="leftSize">
+                                <h2> מקדם הצמדה קבוע <span style="color: red;">*</span></h2>
+                                <small>מהטבלה המפורטת בסעיף 1 במכרז</small>
                             </div>
-                            <div class="flex align-items-center">
-                                <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada34" [value]="3.4"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
-                                <label [for]="mekademHatzmada34" class="ml-2">3.4%</label>
+                            <div class="flex flex-column gap-3" style="margin: 10px 0 0;">
+                                <div class="field-checkbox">
+                                    <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada103" [value]="10.3"
+                                        (click)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
+                                    <label [for]="mekademHatzmada103" class="mr-2">10.3%</label>
+                                </div>
+                                <div class="field-checkbox">
+                                    <p-radioButton [inputId]="mekademHatzmada" name="mekademHatzmada34" [value]="3.4"
+                                        (click)="onChange($event)" [(ngModel)]="mekademHatzmada"></p-radioButton>
+                                    <label [for]="mekademHatzmada34" class="mr-2">3.4%</label>
+                                </div>
                             </div>
-                            <small>מהטבלה המפורטת בסעיף 1 במכרז</small>
                         </div>
 
                         <div class="col-12 card bg" *ngIf="+selectedTypeCalc==2 && !error">
-                            <h4> מקדם הצמדה ({{mekademHatzmada}}%) מעלות מרכיבי הדירה: {{ sumAllMarkivim *
-                                (mekademHatzmada/100) | number:'1.2-2'}}<br>
-                                סה"כ עלות מרכיבי הדירה + מקדם הצמדה מעלות מרכיבי הדירה: {{ sumAllMarkivim
-                                * (1+mekademHatzmada/100) | number:'1.2-2'}}</h4>
+                            <h2> מקדם הצמדה ({{mekademHatzmada}}%) מעלות מרכיבי הדירה: </h2>
+                            <input class="p-inputtext p-component" [disabled]="true" value=" {{ sumAllMarkivim *
+                                    (mekademHatzmada/100) | number:'1.2-2'}}" />
+                        </div>
+                        <div class="col-12 card bg" *ngIf="+selectedTypeCalc==2 && !error">
+                            <h2>סה"כ עלות מרכיבי הדירה + מקדם הצמדה מעלות מרכיבי הדירה:</h2>
+                            <input class="p-inputtext p-component p-element" [disabled]="true" value=" {{ sumAllMarkivim
+                                    * (1+mekademHatzmada/100) | number:'1.2-2'}}" />
                         </div>
 
 
                         <div class="col-12 card">
-                            <h2>גובה ההנחה לצורך בדיקת הגבלת מחיר יח"ד בהשוואה למחיר יח"ד מעודכן<span
-                                    style="color: red;">*</span></h2>
-                            <div class="flex align-items-center" *ngIf="+selectedTypeCalc==1">
-                                <p-radioButton [inputId]="govaHanacha300000" name="govaHanacha300000" [value]="300000"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha300000" class="ml-2">300,000</label>
+                            <div class="leftSize">
+                                <h2>גובה ההנחה לצורך בדיקת הגבלת מחיר יח"ד בהשוואה למחיר יח"ד מעודכן<span
+                                        style="color: red;">*</span></h2>
+                                <small></small>
                             </div>
-                            <div class="flex align-items-center" *ngIf="+selectedTypeCalc==1">
-                                <p-radioButton [inputId]="govaHanacha310278" name="govaHanacha310278" [value]="310270"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha310278" class="ml-2">310,278</label>
+                            <div class="flex flex-column gap-3" style="margin: 10px 0 0;">
+                                <div class="field-checkbox" *ngIf="+selectedTypeCalc==1">
+                                    <p-radioButton [inputId]="govaHanacha300000" name="govaHanacha300000"
+                                        [value]="300000" (click)="onChange($event)"
+                                        [(ngModel)]="govaHanacha"></p-radioButton>
+                                    <label [for]="govaHanacha300000" class="mr-2">300,000</label>
+                                </div>
+                                <div class="field-checkbox" *ngIf="+selectedTypeCalc==1">
+                                    <p-radioButton [inputId]="govaHanacha310278" name="govaHanacha310278"
+                                        [value]="310270" (click)="onChange($event)"
+                                        [(ngModel)]="govaHanacha"></p-radioButton>
+                                    <label [for]="govaHanacha310278" class="mr-2">310,278</label>
+                                </div>
+                                <div class="field-checkbox" *ngIf="+selectedTypeCalc>=2">
+                                    <p-radioButton [inputId]="govaHanacha500000" name="govaHanacha500000"
+                                        [value]="500000" (click)="onChange($event)"
+                                        [(ngModel)]="govaHanacha"></p-radioButton>
+                                    <label [for]="govaHanacha500000" class="mr-2">500,000</label>
+                                </div>
+                                <div class="field-checkbox" *ngIf="+selectedTypeCalc>2">
+                                    <p-radioButton [inputId]="govaHanacha600000" name="govaHanacha" [value]="600000"
+                                        (click)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
+                                    <label [for]="govaHanacha600000" class="mr-2">600,000</label>
+                                </div>
                             </div>
-                            <div class="flex align-items-center" *ngIf="+selectedTypeCalc>=2">
-                                <p-radioButton [inputId]="govaHanacha500000" name="govaHanacha500000" [value]="500000"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha500000" class="ml-2">500,000</label>
-                            </div>
-                            <div class="flex align-items-center" *ngIf="+selectedTypeCalc>2">
-                                <p-radioButton [inputId]="govaHanacha600000" name="govaHanacha" [value]="600000"
-                                    (ngModelChange)="onChange($event)" [(ngModel)]="govaHanacha"></p-radioButton>
-                                <label [for]="govaHanacha600000" class="ml-2">600,000</label>
-                            </div>
-                            <small> ערכים בהתאם לערך שהוזן בסוג החישוב </small>
                         </div>
                         <div class="col-12 card bg" *ngIf="+selectedTypeCalc>=2 && !error">
-                            <h4>גובה ההנחה לצורך בדיקת הגבלת מחיר {{+govaHanacha | number}}<br>
-                                סה"כ עלות מרכיבי הדירה פחות סכום הגבלת גובה ההנחה: <span>{{ sumAllMarkivim - govaHanacha
-                                    | number:'1.2-2'}}</span><br>
+                            <div class="leftSize">
+                                <h2>
+                                    סה"כ עלות מרכיבי הדירה פחות סכום הגבלת גובה ההנחה:
+                                </h2>
                                 <small>גובה הנחה מרבית מפורסמת בחוברת המכרז ובאתר ההרשמה להגרלות. הנחה מרבית נקבעת ע"י
                                     מועצת מקרקעי ישראל</small>
-                            </h4>
+                            </div>
+                            <input class="p-inputtext p-component p-element" [disabled]="true" value=" {{ sumAllMarkivim - govaHanacha  | number:'1.2-2'}}" />
                         </div>
 
 
