@@ -26,6 +26,7 @@ export class Calc implements OnInit {
     mekademHatzmada: string[] = [];
     govaHanacha;
     sumAllMarkivim: number;
+    sumAllMarkivim2: number;
     hanachaBeshiur = 20;
     MekademKoma = 0;
     error = false;
@@ -142,6 +143,11 @@ export class Calc implements OnInit {
         this.calcRavKomot();
         let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
         this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
+
+        if (this.mehirLemeter2 != undefined && +this.selectedTypeCalc == 3) {
+            let newMehirLemeter = this.mehirLemeter2 + (this.mehirLemeter2 * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
+            this.sumAllMarkivim2 = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
+        }
 
         if (+this.selectedTypeCalc == 1) { this.hanachaBeshiur = 20; }
         if (+this.selectedTypeCalc == 2) { this.govaHanacha = 500000; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
