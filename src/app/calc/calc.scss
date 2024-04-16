@@ -42,6 +42,10 @@ small {
 input:disabled {
     font-weight: bold;
 }
+.flipHeb{
+    direction: ltr;
+    unicode-bidi: bidi-override;
+}
 .bg{
     background-color: rgb(224, 224, 224);
  }
