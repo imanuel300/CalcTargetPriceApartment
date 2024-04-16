@@ -7,6 +7,7 @@ interface TypesCalc {
 
 @Component({
     selector: 'Calc',
+    styleUrl: './calc.scss',
     templateUrl: './calc.html'
 })
 export class Calc implements OnInit {

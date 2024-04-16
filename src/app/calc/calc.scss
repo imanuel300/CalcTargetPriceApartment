@@ -1,0 +1,69 @@
+html {
+    font-size: 14px;
+}
+
+body {
+    font-family: var(--font-family);
+    font-weight: normal;
+    background: var(--surface-ground);
+    color: var(--text-color);
+    padding: 1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+small {
+    min-width: 233px;
+    font-size: 1rem;
+}
+.dirLtr{
+    direction: ltr;
+}
+.selectedTypeCalc .p-selectbutton .p-button{
+    margin: 0 10px;
+}
+.p-selectbutton {
+    display: flex; 
+}
+.card {
+    background: var(--surface-card);
+    padding: 3px 22px;
+    border-radius: 1px;
+    margin-bottom: 3px;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+}
+.p-element{
+    display: inline-flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    height: fit-content;
+}
+input:disabled {
+    font-weight: bold;
+}
+.bg{
+    background-color: rgb(224, 224, 224);
+ }
+ .calculator .h2, .calculator h2, .calculator .leftSize {
+    width: 64%;
+    font-size: 1.5rem;
+ }
+.clacWin{
+    background-color: yellow;
+}
+.clacSum, .bg input{
+    color: black;
+}
+.p-dropdown-label:focus{
+    outline: none !important;
+}
+
+@media only screen and (max-device-width: 850px){ 
+    .card {
+        flex-direction: column;
+    }
+     .calculator .h2, .calculator h2, .calculator .leftSize {
+        width: 100%;
+    }
+}
