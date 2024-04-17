@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot=='1'">
                             <div class="leftSize">
-                                <h2>מהספר הקומות בבניין <span style="color: red;">*</span></h2>
+                                <h2>מספר הקומות בבניין <span style="color: red;">*</span></h2>
                                 <small>
                                     <!-- ערכים מותרים בין 0 (קומת קרקע) ל- 30 -->
                                 </small>
@@ -116,11 +116,11 @@
                         </div>
                         <div class="col-12 card" *ngIf="isRavKomot=='1'">
                             <div class="leftSize">
-                                <h2>מספר הקומה שבה נמצאת הדירה <span style="color: red;">*</span></h2>
+                                <h2>מספר הקומה של הדירה <span style="color: red;">*</span></h2>
                                 <small>
                                     <span *ngIf="numberRavKomot < numberKoma" style="color: red;">מספר קומה לא יכול
                                         להיות מעל מספר הקומות בבניין<br></span>
-                                    יש להזין מספר בין 0 (קומת קרקע) ל-50 (מספרים שלמים בלבד)
+                                    <!-- יש להזין מספר בין 0 (קומת קרקע) ל-50 (מספרים שלמים בלבד) -->
                                 </small>
                             </div>
                             <p-inputNumber label="מספר קומה של הדירה" (keyup)="onChange($event)"
@@ -132,7 +132,7 @@
                         <div class="col-12 card bg" *ngIf="MekademKoma!=0 && mehirLemeter>0 && !error">
                             <div class="leftSize">
                                 <h2>מחיר למטר כולל מע"מ </h2>
-                                <small>לאחר תוספת או הפחתה של <b class="flipHeb">{{MekademKoma}}%</b> מקדם קומה</small>
+                                <small>לאחר תוספת או הפחתה של אחוז מקדם הקומה <b class="flipHeb">{{MekademKoma}}%</b></small>
                             </div>
                             <input label="" class="p-inputtext p-component p-element" [disabled]="true"
                                 value="{{mehirLemeter +(mehirLemeter*(MekademKoma/100)) | number:'1.2-2'}}" />.
@@ -143,8 +143,7 @@
                                 <h2>
                                     מחיר למטר כולל מע"מ - לפי שומה עדכנית
                                 </h2>
-                                <small>לפי שומה עדכנית לאחר תוספת או הפחתה של <b class="flipHeb">{{MekademKoma}}%</b>
-                                    מקדם קומה</small>
+                                <small>לאחר תוספת או הפחתה של אחוז מקדם הקומה <b class="flipHeb">{{MekademKoma}}%</b></small>
                             </div>
                             <input label="אחוז מקדם קומה:" class="p-inputtext p-component p-element" [disabled]="true"
                                 value="{{mehirLemeter2 +
@@ -181,10 +180,10 @@
                             <div class="leftSize">
                                 <h2>שטח הדירה כולל מממ"ד במטרים <span style="color: red;">*</span></h2>
                                 <small>
-                                    <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">לא ניתן לחרוג מעל 10 מטר מהגודל
-                                        המרבי</span>
-                                    השטח המרבי ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר.<br>
-                                    שטח דירה מרבי מוכפל ב- 100% מהמחיר למטר. מעל שטח מרבי מכפילים 85% מהמחיר למטר.<br>
+                                    
+                                    <span *ngIf="isDuplex=='0'">השטח המרבי ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר. </span>
+                                    <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">השטח המרבי לדירת דופלקס בעלת {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim+10}} מ"ר.</span><br>
+                                    שטח דירה מרבי מוכפל ב- 100% מהמחיר למטר. מעל שטח מרבי מכפילים ב- 85% מהמחיר למטר.<br>
                                     <!-- ערכים מותרים בין 50 ל- 199 -->
                                 </small>
                             </div>
@@ -194,12 +193,12 @@
                             </p-inputNumber>
                         </div>
 
-                        <div class="col-12 card bg" *ngIf="harigaShetachDira!=0">
+                        <!-- <div class="col-12 card bg" *ngIf="harigaShetachDira!=0">
                             <h4> גודל דירה מרבי: <b>{{shetachDiraPerHadarim}}</b> מטר, שטח חורג מעל לגודל דירה מרבי:
                                 <b>{{harigaShetachDira}} מטר.</b>
                             </h4>
                             <small>שטח חורג מוכפל ב 85% משווי מחיר למטר בנייה עיקרי <b>{{newMehirLemeter}}</b></small>
-                        </div>
+                        </div> -->
                         <div class="col-12 card">
                             <div class="leftSize">
                                 <h2>שטח מרפסת ו/או גינה במטרים <span style="color: red;">*</span></h2>
@@ -217,7 +216,7 @@
                         <div class="col-12 card">
                             <div class="leftSize">
                                 <h2>שטח מחסן במטרים <span style="color: red;">*</span></h2>
-                                <small>מוכפל ב- 40% מהחיר למטר<br>
+                                <small>מוכפל ב- 40% מהמחיר למטר<br>
                                     <!-- ערכים מותרים בין 2 ל- 14 -->
                                 </small>
                             </div>
