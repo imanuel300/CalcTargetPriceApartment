@@ -181,13 +181,15 @@
                                 <h2>שטח הדירה כולל מממ"ד במטרים <span style="color: red;">*</span></h2>
                                 <small>
                                     
-                                    <span *ngIf="isDuplex=='0'">השטח המרבי ל {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim}} מ"ר. </span>
-                                    <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">השטח המרבי לדירת דופלקס בעלת {{numberHadarim}} חדרים הוא {{shetachDiraPerHadarim+10}} מ"ר.</span><br>
+                                    <span *ngIf="isDuplex=='0'">השטח המרבי ל {{numberHadarim}} חדרים הוא {{shetachDiraFromLookup}} מ"ר. </span> 
+                                    <span *ngIf="isDuplex=='1' && numberHadarim>=4.5">השטח המרבי לדירת דופלקס בעלת {{numberHadarim}} חדרים הוא {{shetachDiraFromLookup+10}} מ"ר.</span>
+                                    <span *ngIf="harigaShetachDira>0">+ חריגה {{harigaShetachDira}} מ"ר.</span>
+                                    <br>
                                     שטח דירה מרבי מוכפל ב- 100% מהמחיר למטר. מעל שטח מרבי מכפילים ב- 85% מהמחיר למטר.<br>
                                     <!-- ערכים מותרים בין 50 ל- 199 -->
                                 </small>
                             </div>
-                            <p-inputNumber label="שטח דירה כולל מממד במטרים" (keyup)="onChange($event)"
+                            <p-inputNumber label="שטח דירה כולל ממד במטרים" (keyup)="onChange($event)"
                                 [(ngModel)]="shetachDira" inputId="minmaxfraction" mode="decimal" [min]="50" [max]="199"
                                 [minFractionDigits]="0">
                             </p-inputNumber>

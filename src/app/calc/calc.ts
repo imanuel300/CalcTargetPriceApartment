@@ -46,6 +46,7 @@ export class Calc implements OnInit {
         { hadarim: 5.5, shetach: 135 },
         { hadarim: 6, shetach: 145 }];
     shetachDiraPerHadarim = 0;
+    shetachDiraFromLookup = 0;
     //maam = 1.17;
 
     ngOnInit() {
@@ -82,31 +83,31 @@ export class Calc implements OnInit {
         this.shetachMachsan = 8;
         this.shetachHanayot = 2;
         this.govaHanacha = 300000;
-        this.mekademHatzmada = ['10.3'] ;
+        this.mekademHatzmada = ['10.3'];
     }
     chackRequiredfield() {
         if (this.mehirLemeter == undefined) this.error = true;
         if (this.mehirLemeter2 == undefined && +this.selectedTypeCalc == 3) this.error = true;
         if (this.isRavKomot == undefined) this.error = true;
-        if (this.numberRavKomot == undefined && this.isRavKomot=="1") this.error = true;
-        if (this.numberKoma == undefined && this.isRavKomot=="1") this.error = true;
+        if (this.numberRavKomot == undefined && this.isRavKomot == "1") this.error = true;
+        if (this.numberKoma == undefined && this.isRavKomot == "1") this.error = true;
         if (this.numberHadarim == undefined) this.error = true;
-        if (this.isDuplex == undefined && this.numberHadarim>=4.5) this.error = true;
+        if (this.isDuplex == undefined && this.numberHadarim >= 4.5) this.error = true;
         if (this.shetachDira == undefined) this.error = true;
         if (this.shetachMirpesetOrGina == undefined) this.error = true;
         if (this.shetachMachsan == undefined) this.error = true;
         if (this.shetachHanayot == undefined) this.error = true;
-        if (this.numberRavKomot < this.numberKoma && this.isRavKomot=="1") this.error = true;
+        if (this.numberRavKomot < this.numberKoma && this.isRavKomot == "1") this.error = true;
         if (this.mekademHatzmada == undefined) this.error = true;
     }
     onChange(event) {
         console.log(event);
         if (event) console.log(event.value);
         this.error = false;
-       
 
-        if (this.isRavKomot=="0") {
-            console.log("isRavKomot",this.isRavKomot);
+
+        if (this.isRavKomot == "0") {
+            console.log("isRavKomot", this.isRavKomot);
             this.numberKoma = null;
             this.numberRavKomot = null;
             this.MekademKoma = 0;
@@ -118,22 +119,25 @@ export class Calc implements OnInit {
 
         this.lookupMisparHadarimShetach.forEach(item => {//חישוב מטר בנייה עיקרי ושולי
             if (this.numberHadarim == item.hadarim) {
-                this.shetachDiraPerHadarim = item.shetach;
+                this.shetachDiraFromLookup = item.shetach;
                 if (this.shetachDira > item.shetach) {
                     this.harigaShetachDira = this.shetachDira - item.shetach;
-                    if (this.isDuplex=='1' && +this.numberHadarim >= 4.5 && this.harigaShetachDira > 10) {
-                        this.harigaShetachDira = 10;
-                        this.shetachDira = this.shetachDiraPerHadarim + 10;
+                    this.shetachDiraPerHadarim = item.shetach;
+                    if (this.isDuplex == '1' && +this.numberHadarim >= 4.5) {
+                        this.harigaShetachDira = this.shetachDira - item.shetach - 10;
+                        this.shetachDiraPerHadarim = item.shetach + 10;
                     }
+
+                    // if (this.isDuplex=='1' && +this.numberHadarim >= 4.5 && this.harigaShetachDira > 10) {
+                    //     this.harigaShetachDira = 10;
+                    //     this.shetachDira = this.shetachDiraPerHadarim + 10;
+                    // }
                 } else {
                     this.harigaShetachDira = 0;
+                    this.shetachDiraPerHadarim = this.shetachDira;
                 }
             }
         });
-        if (this.isDuplex=='0') {
-            this.harigaShetachDira = 0;
-        }
-
 
         let newMehirShetachMirpesetOrGina = 0;
         if (this.shetachMirpesetOrGina <= 30) newMehirShetachMirpesetOrGina = this.shetachMirpesetOrGina * 30 / 100;
@@ -143,11 +147,11 @@ export class Calc implements OnInit {
 
         this.calcRavKomot();
         let newMehirLemeter = this.mehirLemeter + (this.mehirLemeter * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
-        this.sumAllMarkivim = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
+        this.sumAllMarkivim = ((newMehirLemeter * (this.shetachDiraPerHadarim) + newMehirLemeter * (this.harigaShetachDira) * 0.85) + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
 
         if (this.mehirLemeter2 != undefined && +this.selectedTypeCalc == 3) {
             let newMehirLemeter = this.mehirLemeter2 + (this.mehirLemeter2 * (this.MekademKoma / 100));// מחיר מטר לאחר חישוב מקדם קומה
-            this.sumAllMarkivim2 = (newMehirLemeter * (this.shetachDira - this.harigaShetachDira) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
+            this.sumAllMarkivim2 = (newMehirLemeter * (this.shetachDiraPerHadarim) + newMehirLemeter * (this.harigaShetachDira) * 0.85 + newMehirLemeter * newMehirShetachMirpesetOrGina + newMehirLemeter * this.shetachMachsan * 40 / 100 + newMehirLemeter * this.shetachHanayot * 200 / 100);
         }
 
         if (+this.selectedTypeCalc == 1) { this.hanachaBeshiur = 20; }
