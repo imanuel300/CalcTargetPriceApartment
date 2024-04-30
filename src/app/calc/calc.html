@@ -191,7 +191,7 @@
                             </div>
                             <p-inputNumber label="שטח דירה כולל ממד במטרים" (keyup)="onChange($event)"
                                 [(ngModel)]="shetachDira" inputId="minmaxfraction" mode="decimal" [min]="50" [max]="199"
-                                [minFractionDigits]="0">
+                                [minFractionDigits]="2">
                             </p-inputNumber>
                         </div>
 
@@ -213,7 +213,7 @@
                             </div>
                             <p-inputNumber label="שטח מרפסת ו/או גינה במטרים " (keyup)="onChange($event)"
                                 [(ngModel)]="shetachMirpesetOrGina" inputId="minmaxfraction" mode="decimal"
-                                [min]="0"></p-inputNumber>
+                                [min]="0" [minFractionDigits]="2"></p-inputNumber>
                         </div>
                         <div class="col-12 card">
                             <div class="leftSize">
@@ -224,7 +224,7 @@
                             </div>
                             <p-inputNumber label="שטח מחסן במטרים " (keyup)="onChange($event)"
                                 [(ngModel)]="shetachMachsan" inputId="minmaxfraction" mode="decimal" [min]="2"
-                                [max]="14"></p-inputNumber>
+                                [max]="14" [minFractionDigits]="2"></p-inputNumber>
                         </div>
                         <div class="col-12 card">
                             <div class="leftSize">
