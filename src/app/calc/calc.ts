@@ -156,10 +156,7 @@ export class Calc implements OnInit {
         
         if (+this.selectedTypeCalc == 1) { this.hanachaBeshiur = 20; }
         if (+this.selectedTypeCalc == 2) { this.govaHanacha = 500000; this.hanachaBeshiur = 20; if (this.mekademHatzmada.length < 1) this.mekademHatzmada = ["10.3"]; }
-        if (+this.selectedTypeCalc == 3) { this.hanachaBeshiur = 25; 
-        if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"];
-        
-     }
+        if (+this.selectedTypeCalc == 3) { this.hanachaBeshiur = 25; if (this.govaHanacha.length < 1) this.govaHanacha = ["600000"]; }
         this.setToLocalStorage();
         this.chackRequiredfield();
     }
