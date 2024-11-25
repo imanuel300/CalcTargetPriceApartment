@@ -421,7 +421,15 @@
                                 </div>
                                 <div *ngIf="selectedTypeCalc==3 && sumAllMarkivim2>0 ">
                                     <div
-                                        *ngIf="(sumAllMarkivim2 - govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) ">
+                                    *ngIf="(sumAllMarkivim2 - govaHanacha)>sumAllMarkivim  ">
+                                    <input label="מחיר דירה סופי מחושב"
+                                        class="p-inputtext p-component p-element clacSum clacWin ba"
+                                        [disabled]="true"
+                                        value="{{sumAllMarkivim | number:'1.2-2'}}" />
+                                </div>
+                                    <div
+                                        *ngIf="(sumAllMarkivim2 - govaHanacha)>(sumAllMarkivim - (sumAllMarkivim * hanachaBeshiur/100)) && 
+                                        (sumAllMarkivim2 - govaHanacha)<sumAllMarkivim ">
                                         <input label="מחיר דירה סופי מחושב"
                                             class="p-inputtext p-component p-element clacSum clacWin ba"
                                             [disabled]="true"
